@@ -1,0 +1,25 @@
+{
+  "name": "wol-front",
+  "version": "1.0.0",
+  "description": "Unconver insights from data",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prime-infinity/wol.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/prime-infinity/wol/issues"
+  },
+  "homepage": "https://github.com/prime-infinity/wol#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "gsap": "^3.11.5",
+    "three": "^0.151.3"
+  }
+}
