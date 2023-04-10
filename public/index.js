@@ -1,5 +1,8 @@
 import * as THREE from "three";
 import { OrbitControls } from "OrbitControls";
+import { users } from "./users.js";
+
+console.log(users);
 
 let scene;
 let camera;
