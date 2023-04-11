@@ -6,6 +6,9 @@ export const users = [
     following: [4, 2, 5],
     followersCount: 4,
     followingCount: 3,
+    x: 6,
+    y: 4,
+    z: 1,
   },
   {
     id: 2,
@@ -14,6 +17,9 @@ export const users = [
     following: [1, 3, 5],
     followersCount: 3,
     followingCount: 3,
+    x: 6,
+    y: 4,
+    z: 5,
   },
   {
     id: 3,
@@ -22,6 +28,9 @@ export const users = [
     following: [1, 5, 8],
     followersCount: 3,
     followingCount: 3,
+    x: 1,
+    y: 6,
+    z: 5,
   },
   {
     id: 4,
@@ -30,6 +39,9 @@ export const users = [
     following: [2, 3, 8],
     followersCount: 5,
     followingCount: 3,
+    x: 3,
+    y: 6,
+    z: 3,
   },
   {
     id: 5,
@@ -38,6 +50,9 @@ export const users = [
     following: [2, 3, 8],
     followersCount: 5,
     followingCount: 3,
+    x: 6,
+    y: 1,
+    z: 5,
   },
   {
     id: 6,
@@ -46,6 +61,9 @@ export const users = [
     following: [2, 4, 1],
     followersCount: 5,
     followingCount: 3,
+    x: 4,
+    y: 2,
+    z: 5,
   },
   {
     id: 7,
@@ -54,6 +72,9 @@ export const users = [
     following: [3, 5, 10],
     followersCount: 5,
     followingCount: 3,
+    x: 1,
+    y: 6,
+    z: 4,
   },
   {
     id: 8,
@@ -62,6 +83,9 @@ export const users = [
     following: [1, 6, 10],
     followersCount: 7,
     followingCount: 3,
+    x: 1,
+    y: 4,
+    z: 3,
   },
   {
     id: 9,
@@ -70,6 +94,9 @@ export const users = [
     following: [4, 5, 7],
     followersCount: 7,
     followingCount: 3,
+    x: 3,
+    y: 5,
+    z: 3,
   },
   {
     id: 10,
@@ -78,5 +105,8 @@ export const users = [
     following: [1, 4, 6, 8],
     followersCount: 6,
     followingCount: 4,
+    x: 1,
+    y: 2,
+    z: 5,
   },
 ];
