@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { OrbitControls } from "OrbitControls";
 import { users } from "./users.js";
 
-console.log(users);
+//console.log(users);
 
 let scene;
 let camera;
@@ -36,7 +36,6 @@ controls.update();
 
 //sphere geometry
 const sphereMaterial = new THREE.MeshLambertMaterial({ color: "blue" });
-
 const spheres = [];
 for (let i = 0; i < users.length; i++) {
   const user = users[i];
@@ -45,6 +44,33 @@ for (let i = 0; i < users.length; i++) {
   sphereMesh.position.set(user.x, user.y, user.z);
   scene.add(sphereMesh);
   spheres.push(sphereMesh);
+}
+
+console.log(spheres);
+
+// Connect users based on their following/followers relationships
+const lineMaterial = new THREE.LineBasicMaterial({ color: "black" });
+for (let i = 0; i < users.length; i++) {
+  const user = users[i];
+  const following = user.following;
+  //console.log(following);
+  for (let j = 0; j < following.length; j++) {
+    const followerIndex = following[j];
+    //console.log(followerIndex);
+    const follower = users[followerIndex];
+    //console.log(follower);
+    /*const lineGeometry = new THREE.BufferGeometry();
+    const lineVertices = [
+      ...spheres[i].position.toArray(),
+      ...spheres[followerIndex].position.toArray(),
+    ];
+    lineGeometry.setAttribute(
+      "position",
+      new THREE.Float32BufferAttribute(lineVertices, 3)
+    );
+    const line = new THREE.Line(lineGeometry, lineMaterial);
+    scene.add(line);*/
+  }
 }
 
 //resize listner
