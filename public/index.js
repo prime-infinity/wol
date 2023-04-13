@@ -37,13 +37,12 @@ controls.update();
 //sphere geometry
 //get user
 const user = users.filter((user) => user.id === 5);
-const sphereMaterial = new THREE.MeshLambertMaterial({ color: "blue" });
+const mSm = new THREE.MeshBasicMaterial({ color: "#A9A9A9" });
+const sSm = new THREE.MeshBasicMaterial({ color: "#71797E" });
 const lineMaterial = new THREE.LineBasicMaterial({ color: "black" });
 
-const sphereSize =
-  user[0].followers.length > 0 ? user[0].followers.length : 0.5;
-const mainSphereGeo = new THREE.SphereGeometry(sphereSize, 20, 20);
-const mainSphereMesh = new THREE.Mesh(mainSphereGeo, sphereMaterial);
+const mainSphereGeo = new THREE.SphereGeometry(1.5, 20, 20);
+const mainSphereMesh = new THREE.Mesh(mainSphereGeo, mSm);
 scene.add(mainSphereMesh);
 //console.log(mainSphereMesh);
 
@@ -61,7 +60,7 @@ for (let i = 0; i < followersSpheres.length; i++) {
   const followers = followersSpheres[i];
   //console.log(followers);
   const spheresGeometry = new THREE.SphereGeometry(0.5, 20, 20);
-  const spherseMesh = new THREE.Mesh(spheresGeometry, sphereMaterial);
+  const spherseMesh = new THREE.Mesh(spheresGeometry, sSm);
   spherseMesh.position.set(followers.x, followers.y, followers.z);
   //console.log(spherseMesh);
   const lineGeometry = new THREE.BufferGeometry();
@@ -77,44 +76,6 @@ for (let i = 0; i < followersSpheres.length; i++) {
   scene.add(line);
   scene.add(spherseMesh);
 }
-
-/*const sphereMaterial = new THREE.MeshLambertMaterial({ color: "blue" });
-const spheres = [];
-for (let i = 0; i < users.length; i++) {
-  const user = users[i];
-  const sphereGeometry = new THREE.SphereGeometry(0.5, 20, 20);
-  const sphereMesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
-  sphereMesh.position.set(user.x, user.y, user.z);
-  scene.add(sphereMesh);
-  spheres.push(sphereMesh);
-}
-
-console.log(spheres);*/
-
-// Connect users based on their following/followers relationships
-//const lineMaterial = new THREE.LineBasicMaterial({ color: "black" });
-//for (let i = 0; i < users.length; i++) {
-//const user = users[i];
-//const following = user.following;
-//console.log(following);
-//for (let j = 0; j < following.length; j++) {
-//const followerIndex = following[j];
-//console.log(followerIndex);
-//const follower = users[followerIndex];
-//console.log(follower);
-/*const lineGeometry = new THREE.BufferGeometry();
-    const lineVertices = [
-      ...spheres[i].position.toArray(),
-      ...spheres[followerIndex].position.toArray(),
-    ];
-    lineGeometry.setAttribute(
-      "position",
-      new THREE.Float32BufferAttribute(lineVertices, 3)
-    );
-    const line = new THREE.Line(lineGeometry, lineMaterial);
-    scene.add(line);*/
-//}
-//}
 
 //resize listner
 window.addEventListener("resize", () => {
