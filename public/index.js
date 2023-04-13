@@ -47,22 +47,38 @@ scene.add(mainSphereMesh);
 //console.log(mainSphereMesh);
 
 const followersSpheres = [];
+const space = 10; // minimum distance between spheres
 for (let i = 0; i < user[0].followers.length; i++) {
   const followersID = user[0].followers[i];
-  //console.log(followers);
-  //for each follower, create a sphere
-  //get details about the followers too, and use it for the spheres
   const followers = users.filter((user) => user.id === followersID);
   followersSpheres.push(followers[0]);
 }
 
+const positions = new Set(); // keep track of occupied positions
+
 for (let i = 0; i < followersSpheres.length; i++) {
   const followers = followersSpheres[i];
-  //console.log(followers);
   const spheresGeometry = new THREE.SphereGeometry(0.5, 20, 20);
   const spherseMesh = new THREE.Mesh(spheresGeometry, sSm);
-  spherseMesh.position.set(followers.x, followers.y, followers.z);
-  //console.log(spherseMesh);
+
+  // generate random position within the space parameter
+  let newPosition = new THREE.Vector3(
+    Math.random() * space - space / 2,
+    Math.random() * space - space / 2,
+    Math.random() * space - space / 2
+  );
+
+  // check if the position is already occupied
+  while (positions.has(newPosition.toArray().toString())) {
+    newPosition = new THREE.Vector3(
+      Math.random() * space - space / 2,
+      Math.random() * space - space / 2,
+      Math.random() * space - space / 2
+    );
+  }
+
+  positions.add(newPosition.toArray().toString()); // add new position to occupied positions
+  spherseMesh.position.copy(newPosition);
   const lineGeometry = new THREE.BufferGeometry();
   const lineVertices = [
     ...mainSphereMesh.position.toArray(),
