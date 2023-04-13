@@ -36,15 +36,14 @@ controls.update();
 
 //sphere geometry
 //get user
-const user = users.filter((user) => user.id === 5);
+const user = users.filter((user) => user.id === 8);
 const mSm = new THREE.MeshBasicMaterial({ color: "#A9A9A9" });
 const sSm = new THREE.MeshBasicMaterial({ color: "#71797E" });
-const lineMaterial = new THREE.LineBasicMaterial({ color: "black" });
 
-const mainSphereGeo = new THREE.SphereGeometry(1.5, 20, 20);
+const mainSphereGeo = new THREE.SphereGeometry(1.2, 20, 20);
 const mainSphereMesh = new THREE.Mesh(mainSphereGeo, mSm);
 scene.add(mainSphereMesh);
-//console.log(mainSphereMesh);
+console.log(user);
 
 const followersSpheres = [];
 const space = 10; // minimum distance between spheres
@@ -79,6 +78,19 @@ for (let i = 0; i < followersSpheres.length; i++) {
 
   positions.add(newPosition.toArray().toString()); // add new position to occupied positions
   spherseMesh.position.copy(newPosition);
+
+  // check if the follower's following array contains a certain ID
+  let lineColor = "black";
+  if (user[0].following.includes(followers.id)) {
+    lineColor = "blue";
+  }
+
+  // create the line material based on the color
+  const lineMaterial = new THREE.LineBasicMaterial({
+    color: lineColor,
+    linewidth: 4,
+  });
+
   const lineGeometry = new THREE.BufferGeometry();
   const lineVertices = [
     ...mainSphereMesh.position.toArray(),
@@ -91,6 +103,7 @@ for (let i = 0; i < followersSpheres.length; i++) {
   const line = new THREE.Line(lineGeometry, lineMaterial);
   scene.add(line);
   scene.add(spherseMesh);
+  console.log(followers);
 }
 
 //resize listner
