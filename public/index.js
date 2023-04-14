@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { OrbitControls } from "OrbitControls";
+import { DragControls } from "DragControls"; // import DragControls
 import { users } from "./users.js";
 
 //console.log(users);
@@ -43,7 +44,7 @@ const sSm = new THREE.MeshBasicMaterial({ color: "#71797E" });
 const mainSphereGeo = new THREE.SphereGeometry(1.2, 20, 20);
 const mainSphereMesh = new THREE.Mesh(mainSphereGeo, mSm);
 scene.add(mainSphereMesh);
-console.log(user);
+//console.log(user);
 
 const followersSpheres = [];
 const space = 10; // minimum distance between spheres
@@ -103,8 +104,42 @@ for (let i = 0; i < followersSpheres.length; i++) {
   const line = new THREE.Line(lineGeometry, lineMaterial);
   scene.add(line);
   scene.add(spherseMesh);
-  console.log(followers);
+  //console.log(followers);
 }
+console.log(followersSpheres);
+const dragControls = new DragControls(
+  followersSpheres,
+  camera,
+  renderer.domElement
+);
+
+/*const updateLinePositions = () => {
+  for (let i = 0; i < scene.children.length; i++) {
+    const object = scene.children[i];
+    if (object instanceof THREE.Line) {
+      const vertices = object.geometry.attributes.position.array;
+      vertices[0] = mainSphereMesh.position.x;
+      vertices[1] = mainSphereMesh.position.y;
+      vertices[2] = mainSphereMesh.position.z;
+      vertices[3] = object.parent.position.x;
+      vertices[4] = object.parent.position.y;
+      vertices[5] = object.parent.position.z;
+      object.geometry.attributes.position.needsUpdate = true;
+    }
+  }
+};
+
+dragControls.addEventListener("drag", (event) => {
+  updateLinePositions();
+});*/
+
+dragControls.addEventListener("dragstart", function (event) {
+  controls.enabled = false;
+});
+
+dragControls.addEventListener("dragend", function (event) {
+  controls.enabled = true;
+});
 
 //resize listner
 window.addEventListener("resize", () => {
