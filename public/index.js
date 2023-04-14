@@ -55,7 +55,7 @@ for (let i = 0; i < user[0].followers.length; i++) {
 }
 
 const positions = new Set(); // keep track of occupied positions
-
+const spherseMeshes = [];
 for (let i = 0; i < followersSpheres.length; i++) {
   const followers = followersSpheres[i];
   const spheresGeometry = new THREE.SphereGeometry(0.5, 20, 20);
@@ -102,19 +102,21 @@ for (let i = 0; i < followersSpheres.length; i++) {
     new THREE.Float32BufferAttribute(lineVertices, 3)
   );
   const line = new THREE.Line(lineGeometry, lineMaterial);
+  spherseMeshes.push(spherseMesh);
   scene.add(line);
   scene.add(spherseMesh);
   //console.log(followers);
 }
-console.log(followersSpheres);
+//console.log(spherseMeshes);
 const dragControls = new DragControls(
-  followersSpheres,
+  spherseMeshes,
   camera,
   renderer.domElement
 );
 
-/*const updateLinePositions = () => {
-  for (let i = 0; i < scene.children.length; i++) {
+const updateLinePositions = () => {
+  console.log(6);
+  /*for (let i = 0; i < scene.children.length; i++) {
     const object = scene.children[i];
     if (object instanceof THREE.Line) {
       const vertices = object.geometry.attributes.position.array;
@@ -126,12 +128,12 @@ const dragControls = new DragControls(
       vertices[5] = object.parent.position.z;
       object.geometry.attributes.position.needsUpdate = true;
     }
-  }
+  }*/
 };
 
 dragControls.addEventListener("drag", (event) => {
   updateLinePositions();
-});*/
+});
 
 dragControls.addEventListener("dragstart", function (event) {
   controls.enabled = false;
@@ -139,6 +141,7 @@ dragControls.addEventListener("dragstart", function (event) {
 
 dragControls.addEventListener("dragend", function (event) {
   controls.enabled = true;
+  updateLinePositions();
 });
 
 //resize listner
@@ -152,10 +155,9 @@ window.addEventListener("resize", () => {
 
 const animate = () => {
   requestAnimationFrame(animate);
-  renderer.render(scene, camera);
-  renderer.render(scene, camera);
-
+  //updateLinePositions();
   controls.update();
+  renderer.render(scene, camera);
 };
 
 animate();
