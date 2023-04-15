@@ -115,20 +115,21 @@ const dragControls = new DragControls(
 );
 
 const updateLinePositions = () => {
-  console.log(6);
-  /*for (let i = 0; i < scene.children.length; i++) {
-    const object = scene.children[i];
-    if (object instanceof THREE.Line) {
-      const vertices = object.geometry.attributes.position.array;
-      vertices[0] = mainSphereMesh.position.x;
-      vertices[1] = mainSphereMesh.position.y;
-      vertices[2] = mainSphereMesh.position.z;
-      vertices[3] = object.parent.position.x;
-      vertices[4] = object.parent.position.y;
-      vertices[5] = object.parent.position.z;
-      object.geometry.attributes.position.needsUpdate = true;
-    }
-  }*/
+  for (let i = 0; i < spherseMeshes.length; i++) {
+    const spherseMesh = spherseMeshes[i];
+    const line = spherseMesh.parent.children.find(
+      (child) => child instanceof THREE.Line
+    );
+    const vertices = line.geometry.attributes.position.array;
+
+    vertices[0] = mainSphereMesh.position.x;
+    vertices[1] = mainSphereMesh.position.y;
+    vertices[2] = mainSphereMesh.position.z;
+    vertices[3] = spherseMesh.position.x;
+    vertices[4] = spherseMesh.position.y;
+    vertices[5] = spherseMesh.position.z;
+    line.geometry.attributes.position.needsUpdate = true;
+  }
 };
 
 dragControls.addEventListener("drag", (event) => {
