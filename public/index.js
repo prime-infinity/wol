@@ -102,29 +102,53 @@ for (let i = 0; i < followersSpheres.length; i++) {
     new THREE.Float32BufferAttribute(lineVertices, 3)
   );
   const line = new THREE.Line(lineGeometry, lineMaterial);
+  spherseMesh.children.push(line);
   spherseMeshes.push(spherseMesh);
   scene.add(line);
   scene.add(spherseMesh);
-  //console.log(line);
 }
-//console.log(spherseMeshes);
+
 const dragControls = new DragControls(
   spherseMeshes,
   camera,
   renderer.domElement
 );
 
+const updateLinePositions = (mesh) => {
+  const spherseMesh = mesh.object;
+
+  // get positions of smaller mesh and bigger mesh
+  const smallerMeshPosition = spherseMesh.position.clone();
+  const biggerMeshPosition = mainSphereMesh.position.clone();
+
+  // update position of line
+  const lineVertices = [
+    smallerMeshPosition.x,
+    smallerMeshPosition.y,
+    smallerMeshPosition.z,
+    biggerMeshPosition.x,
+    biggerMeshPosition.y,
+    biggerMeshPosition.z,
+  ];
+  spherseMesh.children[0].geometry.setAttribute(
+    "position",
+    new THREE.Float32BufferAttribute(lineVertices, 3)
+  );
+  spherseMesh.children[0].geometry.needsUpdate = true;
+};
+
 dragControls.addEventListener("drag", (event) => {
-  updateLinePositions();
+  //updateLinePositions();
 });
 
 dragControls.addEventListener("dragstart", function (event) {
+  //console.log(event);
   controls.enabled = false;
 });
 
 dragControls.addEventListener("dragend", function (event) {
   controls.enabled = true;
-  updateLinePositions();
+  updateLinePositions(event);
 });
 
 //resize listner
