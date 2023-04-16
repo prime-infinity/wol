@@ -81,7 +81,7 @@ for (let i = 0; i < followersSpheres.length; i++) {
   spherseMesh.position.copy(newPosition);
 
   // check if the follower's following array contains a certain ID
-  let lineColor = "black";
+  let lineColor = "red";
   if (user[0].following.includes(followers.id)) {
     lineColor = "blue";
   }
@@ -105,7 +105,7 @@ for (let i = 0; i < followersSpheres.length; i++) {
   spherseMeshes.push(spherseMesh);
   scene.add(line);
   scene.add(spherseMesh);
-  //console.log(followers);
+  //console.log(line);
 }
 //console.log(spherseMeshes);
 const dragControls = new DragControls(
@@ -113,24 +113,6 @@ const dragControls = new DragControls(
   camera,
   renderer.domElement
 );
-
-const updateLinePositions = () => {
-  for (let i = 0; i < spherseMeshes.length; i++) {
-    const spherseMesh = spherseMeshes[i];
-    const line = spherseMesh.parent.children.find(
-      (child) => child instanceof THREE.Line
-    );
-    const vertices = line.geometry.attributes.position.array;
-
-    vertices[0] = mainSphereMesh.position.x;
-    vertices[1] = mainSphereMesh.position.y;
-    vertices[2] = mainSphereMesh.position.z;
-    vertices[3] = spherseMesh.position.x;
-    vertices[4] = spherseMesh.position.y;
-    vertices[5] = spherseMesh.position.z;
-    line.geometry.attributes.position.needsUpdate = true;
-  }
-};
 
 dragControls.addEventListener("drag", (event) => {
   updateLinePositions();
