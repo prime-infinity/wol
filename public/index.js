@@ -108,6 +108,8 @@ for (let i = 0; i < followersSpheres.length; i++) {
   scene.add(spherseMesh);
 }
 
+//problem:spherseMeshes contain lines as children
+//therefore, are draggable like shperes
 const dragControls = new DragControls(
   spherseMeshes,
   camera,
