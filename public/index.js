@@ -102,14 +102,13 @@ for (let i = 0; i < followersSpheres.length; i++) {
     new THREE.Float32BufferAttribute(lineVertices, 3)
   );
   const line = new THREE.Line(lineGeometry, lineMaterial);
-  spherseMesh.children.push(line);
+  spherseMesh.userData = line;
   spherseMeshes.push(spherseMesh);
   scene.add(line);
   scene.add(spherseMesh);
 }
+console.log(spherseMeshes);
 
-//problem:spherseMeshes contain lines as children
-//therefore, are draggable like shperes
 const dragControls = new DragControls(
   spherseMeshes,
   camera,
@@ -132,11 +131,11 @@ const updateLinePositions = (mesh) => {
     biggerMeshPosition.y,
     biggerMeshPosition.z,
   ];
-  spherseMesh.children[0].geometry.setAttribute(
+  spherseMesh.userData.geometry.setAttribute(
     "position",
     new THREE.Float32BufferAttribute(lineVertices, 3)
   );
-  spherseMesh.children[0].geometry.needsUpdate = true;
+  spherseMesh.userData.geometry.needsUpdate = true;
 };
 
 dragControls.addEventListener("drag", (event) => {
