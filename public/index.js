@@ -44,7 +44,20 @@ const sSm = new THREE.MeshBasicMaterial({ color: "#71797E" });
 const mainSphereGeo = new THREE.SphereGeometry(1.2, 20, 20);
 const mainSphereMesh = new THREE.Mesh(mainSphereGeo, mSm);
 scene.add(mainSphereMesh);
-//console.log(user);
+
+// Create a texture for the label
+const labelCanvas = document.createElement("canvas");
+const labelContext = labelCanvas.getContext("2d");
+labelContext.font = "Bold 12px Arial";
+labelContext.fillStyle = "rgba(255,255,255,1)";
+labelContext.fillText("Main Sphere", 0, 12);
+const labelTexture = new THREE.CanvasTexture(labelCanvas);
+
+// Create the sprite and add it to the sphere
+const spriteMaterial = new THREE.SpriteMaterial({ map: labelTexture });
+const sprite = new THREE.Sprite(spriteMaterial);
+sprite.position.set(0, 1.8, 0); // Position the sprite above the sphere
+mainSphereMesh.add(sprite); // Add the sprite as a child of the sphere
 
 const followersSpheres = [];
 const space = 10; // minimum distance between spheres
@@ -107,7 +120,7 @@ for (let i = 0; i < followersSpheres.length; i++) {
   scene.add(line);
   scene.add(spherseMesh);
 }
-console.log(spherseMeshes);
+//console.log(spherseMeshes);
 
 const dragControls = new DragControls(
   spherseMeshes,
