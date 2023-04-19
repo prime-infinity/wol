@@ -40,24 +40,59 @@ controls.update();
 const user = users.filter((user) => user.id === 8);
 const mSm = new THREE.MeshBasicMaterial({ color: "#A9A9A9" });
 const sSm = new THREE.MeshBasicMaterial({ color: "#71797E" });
-
+//console.log(user);
 const mainSphereGeo = new THREE.SphereGeometry(1.2, 20, 20);
 const mainSphereMesh = new THREE.Mesh(mainSphereGeo, mSm);
 scene.add(mainSphereMesh);
 
-// Create a texture for the label
-const labelCanvas = document.createElement("canvas");
-const labelContext = labelCanvas.getContext("2d");
-labelContext.font = "Bold 12px Arial";
-labelContext.fillStyle = "rgba(255,255,255,1)";
-labelContext.fillText("Main Sphere", 0, 12);
-const labelTexture = new THREE.CanvasTexture(labelCanvas);
+// Create a function to create a sprite with a label
+function createLabelSprite(sphere, label, bg) {
+  const labelCanvas = document.createElement("canvas");
+  const labelContext = labelCanvas.getContext("2d");
+  const spriteSize = 128;
+  labelCanvas.width = labelCanvas.height = spriteSize;
+  const centerX = spriteSize / 2;
+  const centerY = spriteSize / 2;
+  const radius = spriteSize / 2 - 1;
+  labelContext.fillStyle = bg;
+  labelContext.beginPath();
+  labelContext.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+  labelContext.fill();
+  labelContext.fillStyle = "white";
+  labelContext.font = "Bold 52px Arial";
+  labelContext.textAlign = "center";
+  labelContext.textBaseline = "middle";
+  labelContext.fillText(label, centerX, centerY);
+  const labelTexture = new THREE.CanvasTexture(labelCanvas);
 
-// Create the sprite and add it to the sphere
-const spriteMaterial = new THREE.SpriteMaterial({ map: labelTexture });
-const sprite = new THREE.Sprite(spriteMaterial);
-sprite.position.set(0, 1.8, 0); // Position the sprite above the sphere
-mainSphereMesh.add(sprite); // Add the sprite as a child of the sphere
+  const spriteMaterial = new THREE.SpriteMaterial({ map: labelTexture });
+  const sprite = new THREE.Sprite(spriteMaterial);
+  sprite.scale.set(0.5, 0.5, 0.5);
+
+  // Calculate position relative to sphere
+  const spherePos = sphere.position.clone();
+
+  const offset = new THREE.Vector3(0, 1.5, 0);
+
+  offset.applyQuaternion(sphere.quaternion);
+  sprite.position.copy(spherePos.add(offset));
+  return sprite;
+}
+
+// Create four label sprites around the sphere
+const sprite1 = createLabelSprite(
+  mainSphereMesh,
+  user[0].followersCount,
+  "blue"
+);
+const sprite2 = createLabelSprite(
+  mainSphereMesh,
+  user[0].followingCount,
+  "red"
+);
+const sprite3 = createLabelSprite(mainSphereMesh, "34", "orange");
+const sprite4 = createLabelSprite(mainSphereMesh, "44", "green");
+mainSphereMesh.add(sprite1, sprite2, sprite3, sprite4);
 
 const followersSpheres = [];
 const space = 10; // minimum distance between spheres
