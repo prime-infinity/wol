@@ -46,7 +46,7 @@ const mainSphereMesh = new THREE.Mesh(mainSphereGeo, mSm);
 scene.add(mainSphereMesh);
 
 // Create a function to create a sprite with a label
-function createLabelSprite(sphere, label, bg) {
+function createLabelSprite(position, label, bg) {
   const labelCanvas = document.createElement("canvas");
   const labelContext = labelCanvas.getContext("2d");
   const spriteSize = 128;
@@ -68,30 +68,23 @@ function createLabelSprite(sphere, label, bg) {
   const spriteMaterial = new THREE.SpriteMaterial({ map: labelTexture });
   const sprite = new THREE.Sprite(spriteMaterial);
   sprite.scale.set(0.5, 0.5, 0.5);
-
-  // Calculate position relative to sphere
-  const spherePos = sphere.position.clone();
-
-  const offset = new THREE.Vector3(0, 1.5, 0);
-
-  offset.applyQuaternion(sphere.quaternion);
-  sprite.position.copy(spherePos.add(offset));
+  sprite.position.set(position.x, position.y, position.z);
   return sprite;
 }
 
 // Create four label sprites around the sphere
 const sprite1 = createLabelSprite(
-  mainSphereMesh,
+  new THREE.Vector3(1.5, 0, 0),
   user[0].followersCount,
   "blue"
 );
 const sprite2 = createLabelSprite(
-  mainSphereMesh,
+  new THREE.Vector3(-1.5, 0, 0),
   user[0].followingCount,
   "red"
 );
-const sprite3 = createLabelSprite(mainSphereMesh, "34", "orange");
-const sprite4 = createLabelSprite(mainSphereMesh, "44", "green");
+const sprite3 = createLabelSprite(new THREE.Vector3(0, 0, 1.5), "34", "orange");
+const sprite4 = createLabelSprite(new THREE.Vector3(0, 0, -1.5), "44", "green");
 mainSphereMesh.add(sprite1, sprite2, sprite3, sprite4);
 
 const followersSpheres = [];
