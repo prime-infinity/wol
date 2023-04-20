@@ -46,7 +46,9 @@ const mainSphereMesh = new THREE.Mesh(mainSphereGeo, mSm);
 scene.add(mainSphereMesh);
 
 // Create a function to create a sprite with a label
-function createLabelSprite(position, label, bg) {
+function createLabelSprite(mesh, ori, label, bg) {
+  //console.log(mesh.position);
+  //console.log(ori);
   const labelCanvas = document.createElement("canvas");
   const labelContext = labelCanvas.getContext("2d");
   const spriteSize = 128;
@@ -68,23 +70,53 @@ function createLabelSprite(position, label, bg) {
   const spriteMaterial = new THREE.SpriteMaterial({ map: labelTexture });
   const sprite = new THREE.Sprite(spriteMaterial);
   sprite.scale.set(0.5, 0.5, 0.5);
-  sprite.position.set(position.x, position.y, position.z);
+  if (ori === "a") {
+    sprite.position.set(
+      mesh.position.x + 1.5,
+      mesh.position.y,
+      mesh.position.z
+    );
+  }
+  if (ori === "b") {
+    sprite.position.set(
+      mesh.position.x - 1.5,
+      mesh.position.y,
+      mesh.position.z
+    );
+  }
+  if (ori === "c") {
+    sprite.position.set(
+      mesh.position.x,
+      mesh.position.y,
+      mesh.position.z + 1.5
+    );
+  }
+  if (ori === "d") {
+    sprite.position.set(
+      mesh.position.x,
+      mesh.position.y,
+      mesh.position.z - 1.5
+    );
+  }
+
   return sprite;
 }
 
 // Create four label sprites around the sphere
 const sprite1 = createLabelSprite(
-  new THREE.Vector3(1.5, 0, 0),
+  mainSphereMesh,
+  "a",
   user[0].followersCount,
   "blue"
 );
 const sprite2 = createLabelSprite(
-  new THREE.Vector3(-1.5, 0, 0),
+  mainSphereMesh,
+  "b",
   user[0].followingCount,
   "red"
 );
-const sprite3 = createLabelSprite(new THREE.Vector3(0, 0, 1.5), "34", "orange");
-const sprite4 = createLabelSprite(new THREE.Vector3(0, 0, -1.5), "44", "green");
+const sprite3 = createLabelSprite(mainSphereMesh, "c", "34", "orange");
+const sprite4 = createLabelSprite(mainSphereMesh, "d", "44", "green");
 mainSphereMesh.add(sprite1, sprite2, sprite3, sprite4);
 
 const followersSpheres = [];

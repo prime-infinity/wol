@@ -109,3 +109,44 @@ const animate = () => {
 };
 
 animate();
+
+/**
+ * function createLabelSprite(position, label, bg) {
+  const labelCanvas = document.createElement("canvas");
+  const labelContext = labelCanvas.getContext("2d");
+  const spriteSize = 128;
+  labelCanvas.width = labelCanvas.height = spriteSize;
+  const centerX = spriteSize / 2;
+  const centerY = spriteSize / 2;
+  const radius = spriteSize / 2 - 1;
+  labelContext.fillStyle = bg;
+  labelContext.beginPath();
+  labelContext.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+  labelContext.fill();
+  labelContext.fillStyle = "white";
+  labelContext.font = "Bold 52px Arial";
+  labelContext.textAlign = "center";
+  labelContext.textBaseline = "middle";
+  labelContext.fillText(label, centerX, centerY);
+  const labelTexture = new THREE.CanvasTexture(labelCanvas);
+
+  const spriteMaterial = new THREE.SpriteMaterial({ map: labelTexture });
+  const sprite = new THREE.Sprite(spriteMaterial);
+  sprite.scale.set(0.5, 0.5, 0.5);
+  sprite.position.set(position.x, position.y, position.z);
+  return sprite;
+}
+
+const sprite1 = createLabelSprite(
+  new THREE.Vector3(1.5, 0, 0),
+  user[0].followersCount,
+  "blue"
+);
+const sprite2 = createLabelSprite(
+  new THREE.Vector3(-1.5, 0, 0),
+  user[0].followingCount,
+  "red"
+);
+const sprite3 = createLabelSprite(new THREE.Vector3(0, 0, 1.5), "34", "orange");
+const sprite4 = createLabelSprite(new THREE.Vector3(0, 0, -1.5), "44", "green");
+ */
