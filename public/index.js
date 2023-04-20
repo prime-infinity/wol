@@ -45,10 +45,7 @@ const mainSphereGeo = new THREE.SphereGeometry(1.2, 20, 20);
 const mainSphereMesh = new THREE.Mesh(mainSphereGeo, mSm);
 scene.add(mainSphereMesh);
 
-// Create a function to create a sprite with a label
-function createLabelSprite(mesh, ori, label, bg) {
-  //console.log(mesh.position);
-  //console.log(ori);
+function createSprite(label, bg) {
   const labelCanvas = document.createElement("canvas");
   const labelContext = labelCanvas.getContext("2d");
   const spriteSize = 128;
@@ -68,38 +65,77 @@ function createLabelSprite(mesh, ori, label, bg) {
   const labelTexture = new THREE.CanvasTexture(labelCanvas);
 
   const spriteMaterial = new THREE.SpriteMaterial({ map: labelTexture });
-  const sprite = new THREE.Sprite(spriteMaterial);
-  sprite.scale.set(0.5, 0.5, 0.5);
-  if (ori === "a") {
-    sprite.position.set(
-      mesh.position.x + 1.5,
-      mesh.position.y,
-      mesh.position.z
-    );
-  }
-  if (ori === "b") {
-    sprite.position.set(
-      mesh.position.x - 1.5,
-      mesh.position.y,
-      mesh.position.z
-    );
-  }
-  if (ori === "c") {
-    sprite.position.set(
-      mesh.position.x,
-      mesh.position.y,
-      mesh.position.z + 1.5
-    );
-  }
-  if (ori === "d") {
-    sprite.position.set(
-      mesh.position.x,
-      mesh.position.y,
-      mesh.position.z - 1.5
-    );
-  }
+  const spriteM = new THREE.Sprite(spriteMaterial);
+  spriteM.scale.set(0.5, 0.5, 0.5);
+  return spriteM;
+}
 
-  return sprite;
+// Create a function to create a sprite with a label
+function createLabelSprite(mesh, ori, label, bg, type) {
+  const spriteM = createSprite(label, bg);
+  function positionSprite(type) {
+    if (type === "main") {
+      if (ori === "a") {
+        spriteM.position.set(
+          mesh.position.x + 1.5,
+          mesh.position.y,
+          mesh.position.z
+        );
+      }
+      if (ori === "b") {
+        spriteM.position.set(
+          mesh.position.x - 1.5,
+          mesh.position.y,
+          mesh.position.z
+        );
+      }
+      if (ori === "c") {
+        spriteM.position.set(
+          mesh.position.x,
+          mesh.position.y,
+          mesh.position.z + 1.5
+        );
+      }
+      if (ori === "d") {
+        spriteM.position.set(
+          mesh.position.x,
+          mesh.position.y,
+          mesh.position.z - 1.5
+        );
+      }
+    } else {
+      if (ori === "a") {
+        spriteM.position.set(
+          mesh.position.x + 1.5,
+          mesh.position.y,
+          mesh.position.z
+        );
+      }
+      if (ori === "b") {
+        spriteM.position.set(
+          mesh.position.x - 1.5,
+          mesh.position.y,
+          mesh.position.z
+        );
+      }
+      if (ori === "c") {
+        spriteM.position.set(
+          mesh.position.x,
+          mesh.position.y,
+          mesh.position.z + 1.5
+        );
+      }
+      if (ori === "d") {
+        spriteM.position.set(
+          mesh.position.x,
+          mesh.position.y,
+          mesh.position.z - 1.5
+        );
+      }
+    }
+  }
+  positionSprite(type);
+  return spriteM;
 }
 
 // Create four label sprites around the sphere
@@ -107,16 +143,18 @@ const sprite1 = createLabelSprite(
   mainSphereMesh,
   "a",
   user[0].followersCount,
-  "blue"
+  "blue",
+  "main"
 );
 const sprite2 = createLabelSprite(
   mainSphereMesh,
   "b",
   user[0].followingCount,
-  "red"
+  "red",
+  "main"
 );
-const sprite3 = createLabelSprite(mainSphereMesh, "c", "34", "orange");
-const sprite4 = createLabelSprite(mainSphereMesh, "d", "44", "green");
+const sprite3 = createLabelSprite(mainSphereMesh, "c", "34", "orange", "main");
+const sprite4 = createLabelSprite(mainSphereMesh, "d", "44", "green", "main");
 mainSphereMesh.add(sprite1, sprite2, sprite3, sprite4);
 
 const followersSpheres = [];
@@ -179,6 +217,30 @@ for (let i = 0; i < followersSpheres.length; i++) {
   spherseMeshes.push(spherseMesh);
   scene.add(line);
   scene.add(spherseMesh);
+
+  let innerSprite1 = createLabelSprite(
+    spherseMesh,
+    "a",
+    followers.followersCount,
+    "blue",
+    "sub"
+  );
+  let innerSprite2 = createLabelSprite(
+    spherseMesh,
+    "b",
+    followers.followingCount,
+    "red",
+    "sub"
+  );
+  let innerSprite3 = createLabelSprite(spherseMesh, "c", "34", "orange", "sub");
+  let innerSprite4 = createLabelSprite(spherseMesh, "d", "44", "green", "sub");
+  spherseMesh.add(innerSprite1, innerSprite2, innerSprite3, innerSprite4);
+  /*let inner = 0;
+  while (inner < 4) {
+    console.log(inner);
+    inner++;
+  }*/
+  //console.log(followers);
 }
 //console.log(spherseMeshes);
 
