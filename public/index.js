@@ -37,7 +37,7 @@ controls.update();
 
 //sphere geometry
 //get user
-const user = users.filter((user) => user.id === 8);
+const user = users.filter((user) => user.id === 3);
 const mSm = new THREE.MeshBasicMaterial({ color: "#A9A9A9" });
 const sSm = new THREE.MeshBasicMaterial({ color: "#71797E" });
 //console.log(user);
@@ -74,17 +74,18 @@ function createSprite(label, bg) {
 function createLabelSprite(mesh, ori, label, bg, type) {
   const spriteM = createSprite(label, bg);
   function positionSprite(type) {
+    const parentScale = mesh.scale.x;
     if (type === "main") {
       if (ori === "a") {
         spriteM.position.set(
-          mesh.position.x + 1.5,
+          mesh.position.x + parentScale * 1.5,
           mesh.position.y,
           mesh.position.z
         );
       }
       if (ori === "b") {
         spriteM.position.set(
-          mesh.position.x - 1.5,
+          mesh.position.x - parentScale * 1.5,
           mesh.position.y,
           mesh.position.z
         );
@@ -93,44 +94,28 @@ function createLabelSprite(mesh, ori, label, bg, type) {
         spriteM.position.set(
           mesh.position.x,
           mesh.position.y,
-          mesh.position.z + 1.5
+          mesh.position.z + parentScale * 1.5
         );
       }
       if (ori === "d") {
         spriteM.position.set(
           mesh.position.x,
           mesh.position.y,
-          mesh.position.z - 1.5
+          mesh.position.z - parentScale * 1.5
         );
       }
     } else {
       if (ori === "a") {
-        spriteM.position.set(
-          mesh.position.x + 1.5,
-          mesh.position.y,
-          mesh.position.z
-        );
+        spriteM.position.set(1, 0, 0);
       }
       if (ori === "b") {
-        spriteM.position.set(
-          mesh.position.x - 1.5,
-          mesh.position.y,
-          mesh.position.z
-        );
+        spriteM.position.set(-1, 0, 0);
       }
       if (ori === "c") {
-        spriteM.position.set(
-          mesh.position.x,
-          mesh.position.y,
-          mesh.position.z + 1.5
-        );
+        spriteM.position.set(0, 0, 1);
       }
       if (ori === "d") {
-        spriteM.position.set(
-          mesh.position.x,
-          mesh.position.y,
-          mesh.position.z - 1.5
-        );
+        spriteM.position.set(0, 0, -1);
       }
     }
   }
@@ -235,14 +220,8 @@ for (let i = 0; i < followersSpheres.length; i++) {
   let innerSprite3 = createLabelSprite(spherseMesh, "c", "34", "orange", "sub");
   let innerSprite4 = createLabelSprite(spherseMesh, "d", "44", "green", "sub");
   spherseMesh.add(innerSprite1, innerSprite2, innerSprite3, innerSprite4);
-  /*let inner = 0;
-  while (inner < 4) {
-    console.log(inner);
-    inner++;
-  }*/
-  //console.log(followers);
+  //console.log(spherseMesh);
 }
-//console.log(spherseMeshes);
 
 const dragControls = new DragControls(
   spherseMeshes,
