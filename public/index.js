@@ -3,8 +3,6 @@ import { OrbitControls } from "OrbitControls";
 import { DragControls } from "DragControls"; // import DragControls
 import { users } from "./users.js";
 
-//console.log(users);
-
 let scene;
 let camera;
 let renderer;
@@ -220,7 +218,6 @@ for (let i = 0; i < followersSpheres.length; i++) {
   let innerSprite3 = createLabelSprite(spherseMesh, "c", "34", "orange", "sub");
   let innerSprite4 = createLabelSprite(spherseMesh, "d", "44", "green", "sub");
   spherseMesh.add(innerSprite1, innerSprite2, innerSprite3, innerSprite4);
-  //console.log(spherseMesh);
 }
 
 const dragControls = new DragControls(
@@ -252,12 +249,9 @@ const updateLinePositions = (mesh) => {
   spherseMesh.userData.geometry.needsUpdate = true;
 };
 
-dragControls.addEventListener("drag", (event) => {
-  //updateLinePositions();
-});
+dragControls.addEventListener("drag", (event) => {});
 
 dragControls.addEventListener("dragstart", function (event) {
-  //console.log(event);
   controls.enabled = false;
 });
 
@@ -277,7 +271,6 @@ window.addEventListener("resize", () => {
 
 const animate = () => {
   requestAnimationFrame(animate);
-  //updateLinePositions();
   controls.update();
   renderer.render(scene, camera);
 };
