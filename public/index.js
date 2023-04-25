@@ -34,8 +34,8 @@ controls.enableZoom = true;
 controls.update();
 
 //sphere geometry
-//get user
-const user = users.filter((user) => user.id === 3);
+//get user, this would be replaced with an API
+const user = users.filter((user) => user.id === 6);
 const mSm = new THREE.MeshBasicMaterial({ color: "#A9A9A9" });
 const sSm = new THREE.MeshBasicMaterial({ color: "#71797E" });
 //console.log(user);
