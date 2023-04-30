@@ -1,7 +1,8 @@
 import * as THREE from "three";
 import { OrbitControls } from "OrbitControls";
 import { DragControls } from "DragControls"; // import DragControls
-import { users } from "./users.js";
+//import { users } from "./users.js";
+import { users } from "./users2.js";
 
 let scene;
 let camera;
