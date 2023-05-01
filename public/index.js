@@ -142,7 +142,7 @@ const sprite4 = createLabelSprite(mainSphereMesh, "d", "44", "green", "main");
 mainSphereMesh.add(sprite1, sprite2, sprite3, sprite4);
 
 const followersSpheres = [];
-const space = 10; // minimum distance between spheres
+const space = 150; // minimum distance between spheres
 for (let i = 0; i < user[0].followers.length; i++) {
   const followersID = user[0].followers[i];
   const followers = users.filter((user) => user.id === followersID);
