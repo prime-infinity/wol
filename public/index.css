@@ -4,9 +4,7 @@ html, body {
     overflow: hidden;
   }
   
-  canvas {
-    display: block;
-  }
-#container{
+  svg {
+    width: 100vw;
     height: 100vh;
-} 
+  }
