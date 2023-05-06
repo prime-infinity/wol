@@ -1,3 +1,4 @@
+//trying to add mutual following lines,not working
 import { users } from "./users2.js";
 //console.log(users);
 // Select a random user
