@@ -68,6 +68,22 @@ const node = svg
       })
   );
 
+// Add zoom controls
+svg.call(
+  d3
+    .zoom()
+    .extent([
+      [0, 0],
+      [window.innerWidth, window.innerHeight],
+    ])
+    .scaleExtent([0.5, 8])
+    .on("zoom", (event) => {
+      const { transform } = event;
+      node.attr("transform", transform);
+      link.attr("transform", transform);
+    })
+);
+
 // Run the simulation and update the positions of the nodes and links
 simulation.on("tick", () => {
   link
