@@ -7,13 +7,17 @@ const mainUser = users[Math.floor(Math.random() * users.length)];
 const nodes = [mainUser];
 mainUser.followers.forEach((followerId) => {
   const follower = users.find((user) => user.id === followerId);
-  if (follower) nodes.push(follower);
+  if (follower) {
+    const followedBack = mainUser.following.includes(followerId);
+    nodes.push({ ...follower, followedBack });
+  }
 });
 
 // Create an array of links between the main user and his followers
 const links = mainUser.followers.map((followerId) => ({
   source: mainUser.id,
   target: followerId,
+  followedBack: mainUser.following.includes(followerId),
 }));
 
 // Set up the D3 force simulation
@@ -33,11 +37,11 @@ const simulation = d3
 const svg = d3.select("svg");
 const link = svg
   .append("g")
-  .attr("stroke", "#999")
   .attr("stroke-opacity", 0.6)
   .selectAll("line")
   .data(links)
   .join("line")
+  .attr("stroke", (d) => (d.followedBack ? "red" : "#999"))
   .attr("stroke-width", (d) => Math.sqrt(d.value));
 const node = svg
   .append("g")
@@ -47,7 +51,7 @@ const node = svg
   .data(nodes)
   .join("circle")
   .attr("r", 5)
-  .attr("fill", (d) => (d === mainUser ? "red" : "blue"))
+  .attr("fill", (d) => (d === mainUser ? "red" : "green"))
   .call(
     d3
       .drag()
