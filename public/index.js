@@ -2,7 +2,9 @@ import { users } from "./users2.js";
 //console.log(users);
 // Select a random user
 const mainUser = users[Math.floor(Math.random() * users.length)];
+const maxFollowers = Math.max(...users.map((user) => user.followersCount));
 
+//console.log(maxFollowers);
 // Create an array of nodes with the main user and his followers
 const nodes = [mainUser];
 mainUser.followers.forEach((followerId) => {
@@ -50,8 +52,10 @@ const node = svg
   .selectAll("circle")
   .data(nodes)
   .join("circle")
-  .attr("r", 5)
-  .attr("fill", (d) => (d === mainUser ? "red" : "green"))
+  .attr("r", (d) =>
+    d === mainUser ? 5 : (7 * d.followersCount) / maxFollowers
+  )
+  .attr("fill", (d) => (d === mainUser ? "red" : "black"))
   .call(
     d3
       .drag()
