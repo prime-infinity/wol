@@ -1,5 +1,5 @@
-//const MAX_USERS = 2000;
-const MAX_USERS = 20;
+const MAX_USERS = 2000;
+//const MAX_USERS = 20;
 // Generate an array of user objects
 export const users = Array.from({ length: MAX_USERS }, (_, i) => ({
   id: i + 1,
