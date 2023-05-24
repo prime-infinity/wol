@@ -53,7 +53,7 @@ const node = svg
   .data(nodes)
   .join("circle")
   .attr("r", (d) =>
-    d === mainUser ? 5 : (7 * d.followersCount) / maxFollowers
+    d === mainUser ? 5 : (5 * d.followersCount) / maxFollowers
   )
   .attr("fill", (d) => (d === mainUser ? "red" : "black"))
   .call(
