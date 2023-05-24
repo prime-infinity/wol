@@ -1,7 +1,8 @@
 import { users } from "./users2.js";
-//console.log(users);
+console.log(users);
 // Select a random user
 const mainUser = users[Math.floor(Math.random() * users.length)];
+console.log(mainUser);
 const maxFollowers = Math.max(...users.map((user) => user.followersCount));
 
 //console.log(maxFollowers);
@@ -75,6 +76,20 @@ const node = svg
       })
   );
 
+const label = svg
+  .append("g")
+  .attr("class", "labels")
+  .selectAll("text")
+  .data(nodes)
+  .enter()
+  .append("text")
+  .attr("class", "label")
+  .text((d) => d.name)
+  .attr("x", (d) => d.x + 10) // Adjust the label position as needed
+  .attr("y", (d) => d.y - 10) // Adjust the label position as needed
+  .attr("font-size", "12px") // Adjust the font size as needed
+  .attr("fill", "#000"); // Adjust the font color as needed
+
 // Add zoom controls
 svg.call(
   d3
@@ -88,6 +103,7 @@ svg.call(
       const { transform } = event;
       node.attr("transform", transform);
       link.attr("transform", transform);
+      label.attr("transform", transform); // Apply zoom to labels
     })
 );
 
@@ -100,4 +116,7 @@ simulation.on("tick", () => {
     .attr("y2", (d) => d.target.y);
 
   node.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
+  label
+    .attr("x", (d) => d.x + 10) // Adjust the label position as needed
+    .attr("y", (d) => d.y - 10); // Adjust the label position as needed
 });
