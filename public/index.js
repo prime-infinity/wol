@@ -44,7 +44,7 @@ const link = svg
   .selectAll("line")
   .data(links)
   .join("line")
-  .attr("stroke", (d) => (d.followedBack ? "red" : "#999"))
+  .attr("stroke", (d) => (d.followedBack ? "red" : "black"))
   .attr("stroke-width", (d) => Math.sqrt(d.value));
 const node = svg
   .append("g")
@@ -87,7 +87,7 @@ const label = svg
   .text((d) => d.name)
   .attr("x", (d) => d.x + 10) // Adjust the label position as needed
   .attr("y", (d) => d.y - 10) // Adjust the label position as needed
-  .attr("font-size", "12px") // Adjust the font size as needed
+  .attr("font-size", "8px") // Adjust the font size as needed
   .attr("fill", "#000"); // Adjust the font color as needed
 
 // Add zoom controls
@@ -117,6 +117,6 @@ simulation.on("tick", () => {
 
   node.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
   label
-    .attr("x", (d) => d.x + 10) // Adjust the label position as needed
-    .attr("y", (d) => d.y - 10); // Adjust the label position as needed
+    .attr("x", (d) => d.x + 5) // Adjust the label position as needed
+    .attr("y", (d) => d.y - 5); // Adjust the label position as needed
 });
