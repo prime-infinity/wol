@@ -76,7 +76,8 @@ const node = svg
       })
   );
 
-const label = svg
+//label
+/*const label = svg
   .append("g")
   .attr("class", "labels")
   .selectAll("text")
@@ -89,6 +90,7 @@ const label = svg
   .attr("y", (d) => d.y - 10) // Adjust the label position as needed
   .attr("font-size", "8px") // Adjust the font size as needed
   .attr("fill", "#000"); // Adjust the font color as needed
+*/
 
 // Add zoom controls
 svg.call(
@@ -103,7 +105,7 @@ svg.call(
       const { transform } = event;
       node.attr("transform", transform);
       link.attr("transform", transform);
-      label.attr("transform", transform); // Apply zoom to labels
+      //label.attr("transform", transform); // Apply zoom to labels
     })
 );
 
@@ -116,7 +118,9 @@ simulation.on("tick", () => {
     .attr("y2", (d) => d.target.y);
 
   node.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
-  label
+  //the label below
+  /*label
     .attr("x", (d) => d.x + 5) // Adjust the label position as needed
     .attr("y", (d) => d.y - 5); // Adjust the label position as needed
+    */
 });
