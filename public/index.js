@@ -1,8 +1,8 @@
 import { users } from "./users2.js";
-console.log(users);
+//console.log(users);
 // Select a random user, will be replaced by api in prod 
 const mainUser = users[Math.floor(Math.random() * users.length)];
-console.log(mainUser);
+//console.log(mainUser);
 const maxFollowers = Math.max(...users.map((user) => user.followersCount));
 
 //console.log(maxFollowers);
