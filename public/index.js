@@ -1,11 +1,11 @@
 import { users } from "./users2.js";
-//console.log(users);
-// Select a random user, will be replaced by api in prod 
+console.log(users);
+// Select a random user, will be replaced by api in prod
 const mainUser = users[Math.floor(Math.random() * users.length)];
 //console.log(mainUser);
 const maxFollowers = Math.max(...users.map((user) => user.followersCount));
 
-//console.log(maxFollowers);
+console.log(maxFollowers);
 // Create an array of nodes with the main user and his followers
 const nodes = [mainUser];
 mainUser.followers.forEach((followerId) => {
