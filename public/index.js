@@ -50,7 +50,13 @@ const tooltip = d3
   .select("body")
   .append("div")
   .attr("class", "tooltip")
-  .style("opacity", 0);
+  .style("opacity", 0)
+  .style("position", "absolute")
+  .style("background-color", "white")
+  .style("color", "black")
+  .style("border-radius", "4px")
+  .style("padding", "4px 8px")
+  .style("pointer-events", "none");
 
 const node = svg
   .append("g")
@@ -82,11 +88,13 @@ const node = svg
       })
   )
   .on("mouseover", (event, d) => {
+    const circle = d3.select(event.target);
+    const [x, y] =
+      circle.attr("cx") < window.innerWidth / 2
+        ? [circle.attr("cx"), circle.attr("cy")]
+        : [circle.attr("cx") - tooltip.node().offsetWidth, circle.attr("cy")];
     tooltip.transition().duration(200).style("opacity", 0.9);
-    tooltip
-      .html(d.name)
-      .style("left", event.clientX + "px")
-      .style("top", event.clientX - 28 + "px");
+    tooltip.html(d.name).style("left", `${x}px`).style("top", `${y}px`);
   })
   .on("mouseout", () => {
     tooltip.transition().duration(200).style("opacity", 0);
