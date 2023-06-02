@@ -1,12 +1,16 @@
 import { users } from "./users2.js";
 
 // Select a random user, will be replaced by api in prod
-const mainUser = users[Math.floor(Math.random() * users.length)];
+let mainUser = users[Math.floor(Math.random() * users.length)];
 
+/*
+console.log(mainUser);
+console.log(users);
+*/
 const maxFollowers = Math.max(...users.map((user) => user.followersCount));
 
 // Create an array of nodes with the main user and his followers
-const nodes = [mainUser];
+let nodes = [mainUser];
 mainUser.followers.forEach((followerId) => {
   const follower = users.find((user) => user.id === followerId);
   if (follower) {
@@ -16,7 +20,7 @@ mainUser.followers.forEach((followerId) => {
 });
 
 // Create an array of links between the main user and his followers
-const links = mainUser.followers.map((followerId) => ({
+let links = mainUser.followers.map((followerId) => ({
   source: mainUser.id,
   target: followerId,
   followedBack: mainUser.following.includes(followerId),
@@ -37,7 +41,7 @@ const simulation = d3
 
 // Create SVG elements for the nodes and links
 const svg = d3.select("svg");
-const link = svg
+let link = svg
   .append("g")
   .attr("stroke-opacity", 0.6)
   .selectAll("line")
@@ -58,7 +62,7 @@ const tooltip = d3
   .style("padding", "4px 8px")
   .style("pointer-events", "none");
 
-const node = svg
+let node = svg
   .append("g")
   .attr("stroke", "#fff")
   .attr("stroke-width", 1.5)
@@ -98,7 +102,20 @@ const node = svg
   })
   .on("mouseout", () => {
     tooltip.transition().duration(200).style("opacity", 0);
-  });
+  })
+  .on("click", (event, d) => {
+    console.log(d);
+    if (d === mainUser) {
+      console.log(4);
+      return; // Skip if already the main user
+    }
+    if (d !== mainUser) {
+      console.log("tt");
+      mainUser = d;
+      updateGraph();
+    }
+  })
+  .style("cursor", "pointer");
 
 // Add zoom controls
 svg.call(
@@ -126,3 +143,87 @@ simulation.on("tick", () => {
 
   node.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
 });
+
+function updateGraph() {
+  nodes = [mainUser];
+  mainUser.followers.forEach((followerId) => {
+    const follower = users.find((user) => user.id === followerId);
+    if (follower) {
+      const followedBack = mainUser.following.includes(followerId);
+      nodes.push({ ...follower, followedBack });
+    }
+  });
+
+  links = mainUser.followers.map((followerId) => ({
+    source: mainUser.id,
+    target: followerId,
+    followedBack: mainUser.following.includes(followerId),
+  }));
+
+  simulation.nodes(nodes);
+  simulation.force("link").links(links);
+
+  node = node.data(nodes, (d) => d.id);
+  node.exit().remove();
+  node = node
+    .enter()
+    .append("circle")
+    .attr("r", (d) =>
+      d === mainUser ? 5 : (5 * d.followersCount) / maxFollowers
+    )
+    .attr("fill", (d) => (d === mainUser ? "red" : "black"))
+    .call(
+      d3
+        .drag()
+        .on("start", (event, d) => {
+          if (!event.active) simulation.alphaTarget(0.3).restart();
+          d.fx = d.x;
+          d.fy = d.y;
+        })
+        .on("drag", (event, d) => {
+          d.fx = event.x;
+          d.fy = event.y;
+        })
+        .on("end", (event, d) => {
+          if (!event.active) simulation.alphaTarget(0);
+          d.fx = null;
+          d.fy = null;
+        })
+    )
+    .on("mouseover", (event, d) => {
+      const circle = d3.select(event.target);
+      const [x, y] =
+        circle.attr("cx") < window.innerWidth / 2
+          ? [circle.attr("cx"), circle.attr("cy")]
+          : [circle.attr("cx") - tooltip.node().offsetWidth, circle.attr("cy")];
+      tooltip.transition().duration(200).style("opacity", 0.9);
+      tooltip.html(d.name).style("left", `${x}px`).style("top", `${y}px`);
+    })
+    .on("mouseout", () => {
+      tooltip.transition().duration(200).style("opacity", 0);
+    })
+    .on("click", (event, d) => {
+      if (d === mainUser) {
+        console.log(4);
+        return; // Skip if already the main user
+      }
+      if (d !== mainUser) {
+        console.log("tt");
+        mainUser = d;
+        updateGraph();
+      }
+    })
+    .merge(node);
+
+  link = link.data(links, (d) => `${d.source.id}-${d.target.id}`);
+  link.exit().remove();
+  link = link
+    .enter()
+    .append("line")
+    .attr("stroke-opacity", 0.6)
+    .attr("stroke", (d) => (d.followedBack ? "red" : "black"))
+    .attr("stroke-width", (d) => Math.sqrt(d.value))
+    .merge(link);
+
+  simulation.alpha(1).restart();
+}

@@ -1,9 +1,9 @@
-const MAX_USERS = 2000;
+//const MAX_USERS = 2000;
 /**
  * note that the app becomes slower the more the followers,
  * espcialy with the addition of labels to the spheres
  */
-//const MAX_USERS = 20;
+const MAX_USERS = 20;
 // Generate an array of user objects
 export const users = Array.from({ length: MAX_USERS }, (_, i) => ({
   id: i + 1,
