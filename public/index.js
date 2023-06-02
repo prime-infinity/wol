@@ -104,15 +104,27 @@ let node = svg
     tooltip.transition().duration(200).style("opacity", 0);
   })
   .on("click", (event, d) => {
-    console.log(d);
+    //console.log(d);
     if (d === mainUser) {
-      console.log(4);
+      //console.log(4);
       return; // Skip if already the main user
     }
     if (d !== mainUser) {
-      console.log("tt");
-      mainUser = d;
-      updateGraph();
+      // Simulate API call
+      d3.select(event.target)
+        .attr("pointer-events", "none") // Disable clic events during API call
+        .attr("opacity", 0.5); // Visual indication of loading
+
+      setTimeout(() => {
+        mainUser = d;
+        updateGraph();
+        // Enable clic events and reset opacity after a delay
+        setTimeout(() => {
+          d3.select(event.target)
+            .attr("pointer-events", "auto") // Re-enable clic events
+            .attr("opacity", 1); // Reset opacity
+        }, 500); // Adjust the delay as needed
+      }, 5000);
     }
   })
   .style("cursor", "pointer");
@@ -204,13 +216,25 @@ function updateGraph() {
     })
     .on("click", (event, d) => {
       if (d === mainUser) {
-        console.log(4);
+        //console.log(4);
         return; // Skip if already the main user
       }
       if (d !== mainUser) {
-        console.log("tt");
-        mainUser = d;
-        updateGraph();
+        // Simulate API call
+        d3.select(event.target)
+          .attr("pointer-events", "none") // Disable clic events during API call
+          .attr("opacity", 0.5); // Visual indication of loading
+
+        setTimeout(() => {
+          mainUser = d;
+          updateGraph();
+          // Enable clic events and reset opacity after a delay
+          setTimeout(() => {
+            d3.select(event.target)
+              .attr("pointer-events", "auto") // Re-enable clic events
+              .attr("opacity", 1); // Reset opacity
+          }, 500); // Adjust the delay as needed
+        }, 1000);
       }
     })
     .merge(node);
