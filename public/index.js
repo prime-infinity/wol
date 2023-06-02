@@ -1,11 +1,10 @@
 import { users } from "./users2.js";
-console.log(users);
+
 // Select a random user, will be replaced by api in prod
 const mainUser = users[Math.floor(Math.random() * users.length)];
-//console.log(mainUser);
+
 const maxFollowers = Math.max(...users.map((user) => user.followersCount));
 
-console.log(maxFollowers);
 // Create an array of nodes with the main user and his followers
 const nodes = [mainUser];
 mainUser.followers.forEach((followerId) => {
@@ -46,6 +45,13 @@ const link = svg
   .join("line")
   .attr("stroke", (d) => (d.followedBack ? "red" : "black"))
   .attr("stroke-width", (d) => Math.sqrt(d.value));
+
+const tooltip = d3
+  .select("body")
+  .append("div")
+  .attr("class", "tooltip")
+  .style("opacity", 0);
+
 const node = svg
   .append("g")
   .attr("stroke", "#fff")
@@ -74,23 +80,17 @@ const node = svg
         d.fx = null;
         d.fy = null;
       })
-  );
-
-//label
-/*const label = svg
-  .append("g")
-  .attr("class", "labels")
-  .selectAll("text")
-  .data(nodes)
-  .enter()
-  .append("text")
-  .attr("class", "label")
-  .text((d) => d.name)
-  .attr("x", (d) => d.x + 10) // Adjust the label position as needed
-  .attr("y", (d) => d.y - 10) // Adjust the label position as needed
-  .attr("font-size", "8px") // Adjust the font size as needed
-  .attr("fill", "#000"); // Adjust the font color as needed
-*/
+  )
+  .on("mouseover", (event, d) => {
+    tooltip.transition().duration(200).style("opacity", 0.9);
+    tooltip
+      .html(d.name)
+      .style("left", event.clientX + "px")
+      .style("top", event.clientX - 28 + "px");
+  })
+  .on("mouseout", () => {
+    tooltip.transition().duration(200).style("opacity", 0);
+  });
 
 // Add zoom controls
 svg.call(
@@ -105,7 +105,6 @@ svg.call(
       const { transform } = event;
       node.attr("transform", transform);
       link.attr("transform", transform);
-      //label.attr("transform", transform); // Apply zoom to labels
     })
 );
 
@@ -118,9 +117,4 @@ simulation.on("tick", () => {
     .attr("y2", (d) => d.target.y);
 
   node.attr("cx", (d) => d.x).attr("cy", (d) => d.y);
-  //the label below
-  /*label
-    .attr("x", (d) => d.x + 5) // Adjust the label position as needed
-    .attr("y", (d) => d.y - 5); // Adjust the label position as needed
-    */
 });
