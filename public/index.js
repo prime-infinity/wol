@@ -239,6 +239,13 @@ function updateGraph() {
     })
     .merge(node);
 
+  // Get the selected colors from the settings popup
+  const followerColor = d3.select("#followerLineColor").property("value");
+  const followingColor = d3.select("#followingLineColor").property("value");
+
+  // Update the link colors
+  link.attr("stroke", (d) => (d.followedBack ? followingColor : followerColor));
+
   link = link.data(links, (d) => `${d.source.id}-${d.target.id}`);
   link.exit().remove();
   link = link
@@ -251,3 +258,28 @@ function updateGraph() {
 
   simulation.alpha(1).restart();
 }
+
+const gearIcon = d3.select(".gear-icon");
+const settingsPopup = d3.select(".settings-popup");
+
+gearIcon.on("click", () => {
+  const popupVisible = settingsPopup.style("display") !== "none";
+  settingsPopup.style("display", popupVisible ? "none" : "flex");
+
+  // Event listener for follower color change
+  const followerColorInput = d3.select("#followerLineColor");
+  followerColorInput.on("change", updateGraph);
+
+  // Event listener for following color change
+  const followingColorInput = d3.select("#followingLineColor");
+  followingColorInput.on("change", updateGraph);
+});
+
+settingsPopup.on("click", () => {
+  settingsPopup.style("display", "flex");
+});
+
+// Prevent settings popup from closing when clicking inside the modal
+d3.select(".settings-modal").on("click", () => {
+  d3.event.stopPropagation();
+});
