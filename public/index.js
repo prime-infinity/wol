@@ -111,20 +111,20 @@ let node = svg
     }
     if (d !== mainUser) {
       // Simulate API call
-      d3.select(event.target)
+      d3.selectAll("circle")
         .attr("pointer-events", "none") // Disable clic events during API call
-        .attr("opacity", 0.5); // Visual indication of loading
+        .attr("opacity", 0.3); // Visual indication of loading
 
       setTimeout(() => {
         mainUser = d;
         updateGraph();
         // Enable clic events and reset opacity after a delay
         setTimeout(() => {
-          d3.select(event.target)
+          d3.selectAll("circle")
             .attr("pointer-events", "auto") // Re-enable clic events
             .attr("opacity", 1); // Reset opacity
         }, 500); // Adjust the delay as needed
-      }, 5000);
+      }, 2000);
     }
   })
   .style("cursor", "pointer");
@@ -221,20 +221,20 @@ function updateGraph() {
       }
       if (d !== mainUser) {
         // Simulate API call
-        d3.select(event.target)
+        d3.selectAll("circle")
           .attr("pointer-events", "none") // Disable clic events during API call
-          .attr("opacity", 0.5); // Visual indication of loading
+          .attr("opacity", 0.3); // Visual indication of loading
 
         setTimeout(() => {
           mainUser = d;
           updateGraph();
           // Enable clic events and reset opacity after a delay
           setTimeout(() => {
-            d3.select(event.target)
+            d3.selectAll("circle")
               .attr("pointer-events", "auto") // Re-enable clic events
               .attr("opacity", 1); // Reset opacity
           }, 500); // Adjust the delay as needed
-        }, 1000);
+        }, 2000);
       }
     })
     .merge(node);
