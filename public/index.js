@@ -267,11 +267,15 @@ gearIcon.on("click", () => {
   settingsPopup.style("display", popupVisible ? "none" : "flex");
 
   // Event listener for follower color change
-  const followerColorInput = d3.select("#followerLineColor");
+  const followerColorInput = d3
+    .select("#followerLineColor")
+    .attr("class", "color-input");
   followerColorInput.on("change", updateGraph);
 
   // Event listener for following color change
-  const followingColorInput = d3.select("#followingLineColor");
+  const followingColorInput = d3
+    .select("#followingLineColor")
+    .attr("class", "color-input");
   followingColorInput.on("change", updateGraph);
 });
 
