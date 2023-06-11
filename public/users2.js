@@ -1,7 +1,6 @@
 const MAX_USERS = 1000;
 /**
- * note that the app becomes slower the more the followers,
- * espcialy with the addition of labels to the spheres
+ * note that the app becomes slower the more the followers
  */
 //const MAX_USERS = 20;
 // Generate an array of user objects
@@ -12,6 +11,7 @@ export const users = Array.from({ length: MAX_USERS }, (_, i) => ({
   following: generateRandomArray(MAX_USERS),
   followersCount: 0,
   followingCount: 0,
+  is_verified: Math.random() < 0.5, // Randomly assign true or false
 }));
 
 // Update followersCount and followingCount properties for each user

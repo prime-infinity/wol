@@ -5,8 +5,8 @@ let mainUser = users[Math.floor(Math.random() * users.length)];
 
 /*
 console.log(mainUser);
-console.log(users);
-*/
+console.log(users);*/
+
 const maxFollowers = Math.max(...users.map((user) => user.followersCount));
 
 // Create an array of nodes with the main user and his followers
@@ -65,7 +65,7 @@ const tooltip = d3
 let node = svg
   .append("g")
   .attr("stroke", "#fff")
-  .attr("stroke-width", 1.5)
+  .attr("stroke-width", 1.7)
   .selectAll("circle")
   .data(nodes)
   .join("circle")
@@ -73,6 +73,7 @@ let node = svg
     d === mainUser ? 5 : (5 * d.followersCount) / maxFollowers
   )
   .attr("fill", (d) => (d === mainUser ? "red" : "black"))
+  .attr("stroke", (d) => (d.is_verified ? "#1DA1F2" : "#fff")) // Add blue stroke for verified users
   .call(
     d3
       .drag()
@@ -284,6 +285,6 @@ settingsPopup.on("click", () => {
 });
 
 // Prevent settings popup from closing when clicking inside the modal
-d3.select(".settings-modal").on("click", () => {
+/*d3.select(".settings-modal").on("click", () => {
   d3.event.stopPropagation();
-});
+});*/
