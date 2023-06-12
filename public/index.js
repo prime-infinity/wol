@@ -2,8 +2,9 @@ import { users } from "./users2.js";
 
 // Select a random user, will be replaced by api in prod
 let mainUser = users[Math.floor(Math.random() * users.length)];
-
-/*
+function updateMainUser() {
+  document.getElementById("main-user").textContent = mainUser.name;
+} /*
 console.log(mainUser);
 console.log(users);*/
 
@@ -118,6 +119,7 @@ let node = svg
 
       setTimeout(() => {
         mainUser = d;
+        updateMainUser();
         updateGraph();
         // Enable clic events and reset opacity after a delay
         setTimeout(() => {
@@ -228,6 +230,7 @@ function updateGraph() {
 
         setTimeout(() => {
           mainUser = d;
+          updateMainUser();
           updateGraph();
           // Enable clic events and reset opacity after a delay
           setTimeout(() => {
@@ -283,7 +286,7 @@ gearIcon.on("click", () => {
 settingsPopup.on("click", () => {
   settingsPopup.style("display", "flex");
 });
-
+updateMainUser();
 // Prevent settings popup from closing when clicking inside the modal
 /*d3.select(".settings-modal").on("click", () => {
   d3.event.stopPropagation();
