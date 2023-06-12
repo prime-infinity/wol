@@ -5,6 +5,10 @@
     <title>WOL</title>
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+  />
   </head>
   <body>
     <div class="container">
@@ -25,10 +29,39 @@
           <i class="fa fa-cog" style="font-size:36px;"></i>
         </div>
       </div>
-      <div class="dashboard-icon">
-        <i class="fa fa-info-circle" style="cursor: pointer;"></i> <!-- You can replace this with your preferred "info" icon -->
-        <span id="main-user"></span> <!-- Replace "Main User" with the name of the current user -->
+      <div class="dashboard">
+        <div class="icon-container">
+          <i id="icon" class="fa fa-info-circle"></i>
+          <span id="main-user"></span>
+        </div>
+        <table id="stats-table" class="animated">
+          <tr>
+            <th>Column 1</th>
+            <th>Column 2</th>
+          </tr>
+          <tr>
+            <td>Dummy Text 1</td>
+            <td>Dummy Text 2</td>
+          </tr>
+          <tr>
+            <td>Dummy Text 3</td>
+            <td>Dummy Text 4</td>
+          </tr>
+          <tr>
+            <td>Dummy Text 5</td>
+            <td>Dummy Text 6</td>
+          </tr>
+          <tr>
+            <td>Dummy Text 7</td>
+            <td>Dummy Text 8</td>
+          </tr>
+          <tr>
+            <td>Dummy Text 9</td>
+            <td>Dummy Text 10</td>
+          </tr>
+        </table>
       </div>
+            
       <script src="d3.js"></script>
       <script type="module" src="index.js"></script>
     </div>

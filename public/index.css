@@ -94,19 +94,64 @@ html, body {
   border: none;
   border-radius: 50%;
 }
-.dashboard-icon {
+.dashboard {
   position: fixed;
   bottom: 20px;
   left: 20px;
+  z-index: 9999;
+}
+
+.icon-container {
   display: flex;
   align-items: center;
 }
 
-.dashboard-icon i {
-  font-size: 24px;
+#icon {
+  font-size: 20px;
   margin-right: 5px;
+  cursor: pointer;
+  transition: transform 0.3s;
 }
 
-.dashboard-icon span {
-  font-size: 16px;
+.opened {
+  transform: rotate(180deg);
+}
+
+#stats-table {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+}
+
+.slideInUp {
+  animation-duration: 0.5s !important;
+}
+
+.slideOutDown {
+  animation-duration: 0.5s !important;
+}
+
+.animated {
+  animation-fill-mode: both;
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes slideOutDown {
+  from {
+    transform: translateY(0%);
+  }
+  to {
+    transform: translateY(100%);
+  }
 }

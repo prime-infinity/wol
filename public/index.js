@@ -4,9 +4,7 @@ import { users } from "./users2.js";
 let mainUser = users[Math.floor(Math.random() * users.length)];
 function updateMainUser() {
   document.getElementById("main-user").textContent = mainUser.name;
-} /*
-console.log(mainUser);
-console.log(users);*/
+}
 
 const maxFollowers = Math.max(...users.map((user) => user.followersCount));
 
@@ -287,7 +285,26 @@ settingsPopup.on("click", () => {
   settingsPopup.style("display", "flex");
 });
 updateMainUser();
-// Prevent settings popup from closing when clicking inside the modal
-/*d3.select(".settings-modal").on("click", () => {
-  d3.event.stopPropagation();
-});*/
+
+//DAHSBOARD
+
+const icon = document.getElementById("icon");
+const table = document.getElementById("stats-table");
+
+let isOpen = false;
+
+icon.addEventListener("click", () => {
+  isOpen = !isOpen;
+  if (isOpen) {
+    table.style.display = "block";
+    table.classList.add("slideInUp");
+  } else {
+    table.classList.remove("slideInUp");
+    table.classList.add("slideOutDown");
+    setTimeout(() => {
+      table.style.display = "none";
+      table.classList.remove("slideOutDown");
+    }, 500);
+  }
+  icon.classList.toggle("opened");
+});
