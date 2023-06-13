@@ -110,48 +110,15 @@ html, body {
   font-size: 20px;
   margin-right: 5px;
   cursor: pointer;
-  transition: transform 0.3s;
-}
-
-.opened {
-  transform: rotate(180deg);
 }
 
 #stats-table {
-  display: none;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: #fff;
+  display: flex;
+  height: 0px;
+  overflow: hidden;
+  transition: height .7s;
 }
 
-.slideInUp {
-  animation-duration: 0.5s !important;
-}
-
-.slideOutDown {
-  animation-duration: 0.5s !important;
-}
-
-.animated {
-  animation-fill-mode: both;
-}
-
-@keyframes slideInUp {
-  from {
-    transform: translateY(100%);
-  }
-  to {
-    transform: translateY(0%);
-  }
-}
-
-@keyframes slideOutDown {
-  from {
-    transform: translateY(0%);
-  }
-  to {
-    transform: translateY(100%);
-  }
+.dashboard.show-table #stats-table {
+  height: 200px;
 }

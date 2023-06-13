@@ -289,22 +289,11 @@ updateMainUser();
 //DAHSBOARD
 
 const icon = document.getElementById("icon");
-const table = document.getElementById("stats-table");
+const dashboard = document.querySelector(".dashboard");
 
-let isOpen = false;
+let isTableVisible = false;
 
 icon.addEventListener("click", () => {
-  isOpen = !isOpen;
-  if (isOpen) {
-    table.style.display = "block";
-    table.classList.add("slideInUp");
-  } else {
-    table.classList.remove("slideInUp");
-    table.classList.add("slideOutDown");
-    setTimeout(() => {
-      table.style.display = "none";
-      table.classList.remove("slideOutDown");
-    }, 500);
-  }
-  icon.classList.toggle("opened");
+  isTableVisible = !isTableVisible;
+  dashboard.classList.toggle("show-table");
 });
