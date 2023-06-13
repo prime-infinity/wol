@@ -1,11 +1,22 @@
 import { users } from "./users2.js";
 
-// Select a random user, will be replaced by api in prod
 let mainUser = users[Math.floor(Math.random() * users.length)];
 function updateMainUser() {
   document.getElementById("main-user").textContent = mainUser.name;
 }
+function updateStatsTable() {
+  const isVerifiedValue = document.getElementById("is-verified-value");
+  const followersValue = document.getElementById("followers-value");
+  const followingValue = document.getElementById("following-value");
+  const tweetsValue = document.getElementById("tweets-value");
 
+  isVerifiedValue.textContent = mainUser.is_verified ? "Yes" : "No";
+  followersValue.textContent = mainUser.followersCount;
+  followingValue.textContent = mainUser.followingCount;
+  tweetsValue.textContent = mainUser.tweetsCount;
+}
+
+// Select a random user, will be replaced by api in prod
 const maxFollowers = Math.max(...users.map((user) => user.followersCount));
 
 // Create an array of nodes with the main user and his followers
@@ -118,6 +129,7 @@ let node = svg
       setTimeout(() => {
         mainUser = d;
         updateMainUser();
+        updateStatsTable();
         updateGraph();
         // Enable clic events and reset opacity after a delay
         setTimeout(() => {
@@ -229,6 +241,7 @@ function updateGraph() {
         setTimeout(() => {
           mainUser = d;
           updateMainUser();
+          updateStatsTable();
           updateGraph();
           // Enable clic events and reset opacity after a delay
           setTimeout(() => {
@@ -285,6 +298,7 @@ settingsPopup.on("click", () => {
   settingsPopup.style("display", "flex");
 });
 updateMainUser();
+updateStatsTable();
 
 //DAHSBOARD
 

@@ -11,6 +11,7 @@ export const users = Array.from({ length: MAX_USERS }, (_, i) => ({
   following: generateRandomArray(MAX_USERS),
   followersCount: 0,
   followingCount: 0,
+  tweetsCount: Math.floor(Math.random() * 151),
   is_verified: Math.random() < 0.5, // Randomly assign true or false
 }));
 
