@@ -4,14 +4,27 @@ let mainUser = users[Math.floor(Math.random() * users.length)];
 function updateMainUser() {
   document.getElementById("main-user").textContent = mainUser.name;
 }
+
+function calculateMutualFollowingPercentage() {
+  const mainUserFollowers = mainUser.followersCount;
+  const mainUserFollowing = mainUser.followingCount;
+  const mutualFollowingPercentage =
+    (mainUserFollowing / mainUserFollowers) * 100;
+  return mutualFollowingPercentage.toFixed(1); // Round to 2 decimal places
+}
+
 function updateStatsTable() {
   const isVerifiedValue = document.getElementById("is-verified-value");
   const followersValue = document.getElementById("followers-value");
+  const mutualFollowingValue = document.getElementById(
+    "mutual-following-value"
+  );
   const followingValue = document.getElementById("following-value");
   const tweetsValue = document.getElementById("tweets-value");
 
   isVerifiedValue.textContent = mainUser.is_verified ? "Yes" : "No";
   followersValue.textContent = mainUser.followersCount;
+  mutualFollowingValue.textContent = calculateMutualFollowingPercentage();
   followingValue.textContent = mainUser.followingCount;
   tweetsValue.textContent = mainUser.tweetsCount;
 }
