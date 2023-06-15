@@ -1,8 +1,15 @@
 import { users } from "./users2.js";
 
 let mainUser = users[Math.floor(Math.random() * users.length)];
+let tree = [mainUser.name];
+
 function updateMainUser() {
   document.getElementById("main-user").textContent = mainUser.name;
+
+  const treeElement = document.getElementById("tree");
+  const treeContent = tree.slice().reverse().join(" > "); // Join the elements of the tree array with ' -> '
+
+  treeElement.textContent = treeContent;
 }
 
 function calculateMutualFollowingPercentage() {
@@ -130,7 +137,6 @@ let node = svg
   .on("click", (event, d) => {
     //console.log(d);
     if (d === mainUser) {
-      //console.log(4);
       return; // Skip if already the main user
     }
     if (d !== mainUser) {
@@ -140,6 +146,7 @@ let node = svg
         .attr("opacity", 0.3); // Visual indication of loading
 
       setTimeout(() => {
+        tree.push(d.name); // Add the previous main user to the tree array
         mainUser = d;
         updateMainUser();
         updateStatsTable();
@@ -252,6 +259,7 @@ function updateGraph() {
           .attr("opacity", 0.3); // Visual indication of loading
 
         setTimeout(() => {
+          tree.push(d.name); // Add the previous main user to the tree array
           mainUser = d;
           updateMainUser();
           updateStatsTable();
