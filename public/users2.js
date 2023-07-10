@@ -1,7 +1,7 @@
 /**
  * note that the app becomes slower the more the followers
  */
-const MAX_USERS = 50;
+const MAX_USERS = 1000;
 // Generate an array of user objects
 export const users = Array.from({ length: MAX_USERS }, (_, i) => ({
   id: i + 1,
